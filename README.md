@@ -37,7 +37,7 @@ const { urlShortener } = await setupUrlShortener({
 
 ## Usage
 
-#####Shorten urls
+#### Shorten urls
 
 ```$xslt
     const { urlShortener } = await setupUrlShortener({ dbOpts: {}, shortenerOpts: {} });
@@ -51,7 +51,7 @@ const { urlShortener } = await setupUrlShortener({
     // otherShortUrl: https://tetrascience.com/some/custom/route/uniq12chars
 ```
 
-#####Retrieve original url using a short url
+#### Retrieve original url using a short url
 ```$xslt
     // originalUrl: "http://dashboard.ci.dev.tetrascience.com/dashboard#/dashboard?filter=deviceName&page=1"
     const shortUrl = "https://tetrascience.com/uniq12chars";
@@ -59,7 +59,7 @@ const { urlShortener } = await setupUrlShortener({
     // longUrl:     "http://dashboard.ci.dev.tetrascience.com/dashboard#/dashboard?filter=deviceName&page=1"
 ```
 
-#####Remove url mappings
+#### Remove url mappings
 ```
     const shortUrl = "https://tetrascience.com/uniq12chars";
     await urlShortener.remove(shortUrl);
