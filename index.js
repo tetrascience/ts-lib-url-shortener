@@ -14,7 +14,7 @@ exports.handler = async function(event) {
   });
   switch (event.type) {
     case "set":
-      if (event.longUrl) {
+      if (!event.longUrl) {
         throw new Error("Missing longUrl.");
       }
       const shortUrl = await urlShortener.shorten(event.longUrl);
@@ -23,7 +23,7 @@ exports.handler = async function(event) {
       };
       break;
     case "get":
-      if (event.shortUrl) {
+      if (!event.shortUrl) {
         throw new Error("Missing shortUrl.");
       }
       const longUrl = await urlShortener.getOriginalUrlFrom(event.shortUrl);
