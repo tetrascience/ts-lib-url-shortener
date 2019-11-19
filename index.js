@@ -37,4 +37,6 @@ exports.handler = async function(event) {
     default:
       response.statusCode = 404;
   }
+
+  return response;
 };
