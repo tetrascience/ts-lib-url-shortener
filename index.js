@@ -6,11 +6,11 @@ exports.handler = async function(event) {
   };
   const { urlShortener } = await setupUrlShortener({
     dbOpts: {
-      url: "FILL",
-      dbName: "FILL",
-      collectionName: "FILL"
+      url: process.env.MONGO_URL,
+      dbName: process.env.DB_NAME,
+      collectionName: process.env.COLLECTION_NAME
     },
-    shortenerOpts: { domain: "FILL", shortenedLength: 12 }
+    shortenerOpts: { domain: process.env.URL_PREFIX, shortenedLength: 12 }
   });
   switch (event.type) {
     case "set":
