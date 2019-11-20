@@ -19,7 +19,7 @@ $ npm install tetrascience/ts-lib-url-shortener --save
 and then initializes `UrlShortener` with that connection.
 
 
-####Available options
+#### Available options
 
 ```$xslt
 const { urlShortener } = await setupUrlShortener({ 
