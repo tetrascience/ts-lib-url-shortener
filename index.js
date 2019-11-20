@@ -73,8 +73,9 @@ exports.retrieveHandler = async function (event) {
 exports.deleteHandler = async function (event) {
   const response = {};
 
+  const requestBody = JSON.parse(event.body || "{}");
   const urlShortener = await getUrlShortener();
-  await urlShortener.remove(event.shortUrl).then(() => {
+  await urlShortener.remove(requestBody.shortUrl).then(() => {
     response.statusCode = 200;
   }).catch(err => {
     response.statusCode = 500;
