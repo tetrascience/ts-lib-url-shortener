@@ -15,7 +15,8 @@
     "expect": false,
     "describe": false,
     "it": false,
-    "afterEach": false
+    "afterEach": false,
+    "process": false
   },
   "parserOptions": {
     "ecmaVersion": 2018
