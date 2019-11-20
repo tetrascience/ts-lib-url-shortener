@@ -21,8 +21,7 @@ const getUrlShortener = async () => {
 
 exports.shortenHandler = async function (event) {
   const response = {};
-  const requestBody = JSON.stringify(event.body || {});
-
+  const requestBody = JSON.parse(event.body || "{}");
   if (!requestBody.longUrl) {
     response.statusCode = 422; // Unprocessable Entity
     response.body = "Missing longUrl";
@@ -76,7 +75,7 @@ exports.deleteHandler = async function (event) {
 
   const urlShortener = await getUrlShortener();
   await urlShortener.remove(event.shortUrl).then(() => {
-      response.statusCode = 200;
+    response.statusCode = 200;
   }).catch(err => {
     response.statusCode = 500;
     response.body = err;
