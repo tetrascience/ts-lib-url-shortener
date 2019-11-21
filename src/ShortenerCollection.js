@@ -6,21 +6,17 @@ class ShortenerCollection {
       this.collection = db.collection(collectionName);
     }
   }
-  add({ originalUrl, urlId, shortUrl }) {
-    return this.collection.findOneAndUpdate(
-      { _id: urlId, originalUrl },
-      {
-        $setOnInsert: {
-          _id: urlId,
-          originalUrl,
-          shortUrl
-        }
-      },
-      {
-        upsert: true,
-        returnOriginal: true
-      }
-    );
+  async add({ originalUrl, urlId, shortUrl }) {
+    const existingMapping = await this.collection.findOne({ _id: urlId, originalUrl });
+    if (existingMapping) {
+      return existingMapping;
+    }
+
+    await this.collection.insertOne({
+      _id: urlId,
+      originalUrl,
+      shortUrl
+    });
   }
 
   async removeBy(query) {
