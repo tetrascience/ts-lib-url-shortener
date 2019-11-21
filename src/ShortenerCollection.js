@@ -8,7 +8,7 @@ class ShortenerCollection {
   }
   add({ originalUrl, urlId, shortUrl }) {
     return this.collection.findOneAndUpdate(
-      { originalUrl },
+      { _id: urlId, originalUrl },
       {
         $setOnInsert: {
           _id: urlId,

@@ -14,11 +14,6 @@ class UrlShortener {
     if (!validUrl.isUri(originalUrl)) {
       throw new Error(errorMessages.INVALID_URL);
     }
-    let correspondingMapping = await this.collection.findBy({ originalUrl });
-    // mapping already exists
-    if (correspondingMapping) {
-      return correspondingMapping.shortUrl;
-    }
 
     let newMapping;
     let isSuccess = false;

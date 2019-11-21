@@ -59,17 +59,36 @@ describe("UrlShortener:", function() {
       expect(shortUrl).toEqual(expectedShortUrl);
       expect(mapping).toMatchObject(expectedMapping);
     });
-    it("should just return the shortUrl if the mapping already exists", async () => {
+    it("should generate a new shortUrl (a new mapping) even if the mapping already exists", async () => {
       const uniqueId = "doesNotMatter";
-      const expectedShortUrl = "something";
+      nanoid.mockReturnValue(uniqueId);
+      const expectedShortUrl = `${this.domain}/${uniqueId}`;
       const existingMapping = {
+        _id: "someOldId",
+        originalUrl: this.longUrl,
+        shortUrl: "something"
+      };
+      await this.rawCollection.insertOne(existingMapping);
+
+      const shortUrl = await this.urlShortener.shorten(this.longUrl);
+      const expectedMapping = {
         _id: uniqueId,
         originalUrl: this.longUrl,
         shortUrl: expectedShortUrl
       };
-      await this.rawCollection.insertOne(existingMapping);
-      const shortUrl = await this.urlShortener.shorten(this.longUrl);
+
+      const mappings = await this.rawCollection
+        .find({
+          originalUrl: this.longUrl
+        })
+        .toArray();
+      const newMapping = await this.rawCollection.findOne({
+        _id: uniqueId
+      });
+
       expect(shortUrl).toEqual(expectedShortUrl);
+      expect(mappings.length).toEqual(2);
+      expect(newMapping).toMatchObject(expectedMapping);
     });
     it("should try shortening until it works (max 10 attempts)", async () => {
       // handling unlikely collisions for short ids
